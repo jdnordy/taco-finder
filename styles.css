@@ -1,61 +1,82 @@
 body {
     min-width: 350px;
     max-width: 100%;
+    background-color: #f5f5f5;
     /* background-color:snow; */
-    background-image: url("https://www.netclipart.com/pp/m/8-81605_taco-clipart-png-cartoon-taco-transparent-background.png");
+/*     background-image: url("https://www.netclipart.com/pp/m/8-81605_taco-clipart-png-cartoon-taco-transparent-background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: auto; */
+    border: 5px solid #D32323;
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none
+}
+a:hover {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 800;
+  padding: 12px;
+  margin: 0;
 }
 
 #titlequest {
-    font-family: "Times New Roman", Times, serif;
+    /* font-family: "Times New Roman", Times, serif; */
     text-align: center;
 
 }
 
 .option {
-    border-width: 350px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    border-top: 5px solid #D32323;
+    padding: 12px;
+    /* border-width: 350px;
     border-style: outset;
     border-width: 0.5px;
-    border-color: seashell;
+    border-color: seashell; */
 }
 
-#nameoftheplace {
-    text-align: left;
+#venue-name {
     text-transform: uppercase;
-    font-size: 35px;
-    font-family: "Times New Roman", Times, serif;
-    font-stretch: expanded;
-
+    font-size: 24px;
+    font-weight: 800;
+    font-style: italic;
+    color: black;
 }
 
-#ratingoftheplace {
-    text-align: left;
-    text-transform: uppercase;
-    font-size: 20px;
-    font-family: "Times New Roman", Times, serif;
-    font-stretch: expanded;
-    position: absolute;
-    left: 10px;
-    top: 115px;
+#venue-name:hover {
+  color: #D32323;
 }
 
-#numberoftheplace {
+#rating {
+    font-size: 14px;
+}
+
+#number {
     text-align: left;
     text-transform: uppercase;
     text-shadow: 0px 0.5px #542C14;
-    font-size: 20px;
-    font-family: "Times New Roman", Times, serif;
+    font-size: 14px;
     font-stretch: expanded;
-
 }
 
-#Tago {
-    text-align: right;
-    position: absolute;
-    right: 30px;
-    top: 80px;
+.go {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
+#tago {
+  background-image: url("images/taco_slow.gif");
+  width: 70px;
+  height: 70px;
+  background-size: 70px 70px;
+  background-repeat: no-repeat;
 }

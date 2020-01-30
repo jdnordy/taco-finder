@@ -52,16 +52,17 @@ $(document).ready( () => {
           // add a new post into the feed
           document.getElementById('optiononetwo').innerHTML += `
             <div class="option">
-              <div class="info" id="info1">
+              <div class="info">
                 <a href="${venue.link}" target="_blank">
-                  <h2>${venue.name}</h2>
+                  <h2 id="venue-name">${venue.name}</h2>
                 </a>
-                <p>Rating: ${venue.rating}</p>
-                <a href="tel:${venue.phone}" target="_blank">${venue.phone}</a>
+                <p id="rating">Rating: ${venue.rating}</p>
+                <a id="number" href="tel:${venue.phone}" target="_blank">${venue.phone}</a>
               </div>
-              <div id="Tago">
+              <div class="go">
                 <!-- input code for google url -->
-                <a href="https://www.google.com/maps/place/${venue.address}" target="_blank">Go</a>
+                <a class="btn btn-outline-warning" href="https://www.google.com/maps/place/${venue.address}" target="_blank">GO</a>
+                <div id="tago"></div>
               </div>
             </div>
           `;
