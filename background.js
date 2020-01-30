@@ -4,9 +4,9 @@
 
 'use strict';
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")'}, function() {
-  });
+chrome.runtime.onInstalled.addListener(() => {
+  // chrome.storage.sync.set({color: 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")'}, function() {
+  // });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
