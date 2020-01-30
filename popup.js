@@ -7,11 +7,6 @@ $(document).ready( () => {
   let fallingTacos = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")'
 
   navigator.geolocation.getCurrentPosition((userLocation) => {
-    // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    //   chrome.tabs.executeScript(
-    //       tabs[0].id,
-    //       {code: `document.body.style.backgroundImage = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")';`});
-    // });
   
     const search = `term=tacos&latitude=${userLocation.coords.latitude}&longitude=${userLocation.coords.longitude}`;
   
@@ -88,7 +83,7 @@ $(document).ready( () => {
       });
   }); 
 
-  // write javascript for loading wheel
+  // javascript for loading wheel
   document.getElementById('optiononetwo').innerHTML += `
     <div class="d-flex justify-content-center" id="taco-spinner">
       <div class="spinner-border" role="status" style="">
