@@ -7,11 +7,11 @@ $(document).ready( () => {
   let fallingTacos = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")'
 
   navigator.geolocation.getCurrentPosition((userLocation) => {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.executeScript(
-          tabs[0].id,
-          {code: `document.body.style.backgroundImage = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")';`});
-    });
+    // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    //   chrome.tabs.executeScript(
+    //       tabs[0].id,
+    //       {code: `document.body.style.backgroundImage = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")';`});
+    // });
   
     const search = `term=tacos&latitude=${userLocation.coords.latitude}&longitude=${userLocation.coords.longitude}`;
   
@@ -26,6 +26,7 @@ $(document).ready( () => {
 
     fetch(`https://api.yelp.com/v3/businesses/search?${search}`, searchRequest)
       .then(response => {
+        // stop spinning wheel
         return response.json();
       })
       .then ((yelp) => {
@@ -56,6 +57,14 @@ $(document).ready( () => {
 
         /* dynamically load the two closest taco places */
         top2.forEach((venue) => {
+          // remove taco-spinner loading wheel
+          $("#taco-spinner").remove();
+          // rain tacos in backgound of webpage
+          chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.executeScript(
+                tabs[0].id,
+                {code: `document.body.style.backgroundImage = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")';`});
+          });
           // add a new post into the feed
           document.getElementById('optiononetwo').innerHTML += `
             <div class="option">
@@ -78,4 +87,13 @@ $(document).ready( () => {
         console.log(e);
       });
   }); 
+
+  // write javascript for loading wheel
+  document.getElementById('optiononetwo').innerHTML += `
+    <div class="d-flex justify-content-center" id="taco-spinner">
+      <div class="spinner-border" role="status" style="">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    `;
 });

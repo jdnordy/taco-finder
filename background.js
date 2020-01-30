@@ -5,8 +5,7 @@
 'use strict';
 
 chrome.runtime.onInstalled.addListener(() => {
-  // chrome.storage.sync.set({color: 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")'}, function() {
-  // });
+  // makes sure it runs on all webpages
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
