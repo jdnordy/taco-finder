@@ -1,8 +1,9 @@
 {
   "name": "Taco Finder",
   "version": "1.0",
-  "description": "For when your hungry!",
-  "permissions": ["declarativeContent", "storage"],
+  "description": "Find a place to eat tacos near you",
+  "permissions": ["activeTab", "declarativeContent", "storage", "geolocation"],
+  "options_page": "options.html",
   "background": {
     "scripts": ["background.js"],
     "persistent": false
