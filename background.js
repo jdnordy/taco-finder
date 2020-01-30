@@ -5,8 +5,7 @@
 'use strict';
 
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log('The color is green.');
+  chrome.storage.sync.set({color: 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")'}, function() {
   });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
@@ -16,14 +15,4 @@ chrome.runtime.onInstalled.addListener(function() {
       actions: [new chrome.declarativeContent.ShowPageAction()]
     }]);
   });
-});
-
-chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-  chrome.declarativeContent.onPageChanged.addRules([{
-    conditions: [new chrome.declarativeContent.PageStateMatcher({
-      pageUrl: {hostSuffix: '.com'},
-    })
-    ],
-        actions: [new chrome.declarativeContent.ShowPageAction()]
-  }]);
 });
