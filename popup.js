@@ -25,41 +25,30 @@ $(document).ready( () => {
         return response.json();
       })
       .then ((yelp) => {
-        const firstTaco = {};
-        const secondTaco = {};
-        const top2 = [];
-        //take top 2 results
-        const firstResult = yelp.businesses[0];
-        const secondResult = yelp.businesses[1];
+        // array to store the top 2 results
+        const topResults = [];
+        // loop through the reponse from Yelp API and add top two results to array
+        for (let i = 0; i < 2; i++) {
+          const venue = {};
+          venue.name = yelp.businesses[i].name;
+          venue.rating = yelp.businesses[i].rating;
+          venue.phone = yelp.businesses[i].phone;
+          venue.address = yelp.businesses[i].location.display_address.join(' ');
+          venue.address = venue.address.replace(/\s/gi, '+');
+          venue.link = yelp.businesses[i].url;
+          topResults.push(venue);
+        }
 
-        firstTaco.name = firstResult.name;
-        firstTaco.rating = firstResult.rating;
-        firstTaco.phone = firstResult.phone;
-        firstTaco.address = firstResult.location.display_address.join(' ');
-        firstTaco.address = firstTaco.address.replace(/\s/gi, '+');
-        firstTaco.link = firstResult.url;
-
-        secondTaco.name = secondResult.name;
-        secondTaco.rating = secondResult.rating;
-        secondTaco.phone = secondResult.phone;
-        secondTaco.address = secondResult.location.display_address.join(' ');
-        secondTaco.address = secondTaco.address.replace(/\s/gi, '+');
-        secondTaco.link = secondResult.url;
-
-        //array of the two objects
-        top2.push(firstTaco);
-        top2.push(secondTaco);
-
+        // remove taco-spinner loading wheel
+        $("#taco-spinner").remove();
+        // rain tacos in backgound of webpage
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.executeScript(
+              tabs[0].id,
+              {code: `document.body.style.backgroundImage = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")';`});
+        });
         /* dynamically load the two closest taco places */
-        top2.forEach((venue) => {
-          // remove taco-spinner loading wheel
-          $("#taco-spinner").remove();
-          // rain tacos in backgound of webpage
-          chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.executeScript(
-                tabs[0].id,
-                {code: `document.body.style.backgroundImage = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")';`});
-          });
+        topResults.forEach((venue) => {
           // add a new post into the feed
           document.getElementById('optiononetwo').innerHTML += `
             <div class="option">
