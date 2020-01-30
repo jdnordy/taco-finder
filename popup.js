@@ -13,53 +13,62 @@ $(document).ready( () => {
           {code: `document.body.style.backgroundImage = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")';`});
     });
   
-    const searchRequest = `&ll=${userLocation.coords.latitude},${userLocation.coords.longitude}&limit=2&query=tacos`
+    const search = `term=tacos&latitude=${userLocation.coords.latitude}&longitude=${userLocation.coords.longitude}`;
   
-    fetch(`https://api.foursquare.com/v2/venues/search?client_id=EK1PH1WWOCSBZZXFRGWGFSXZ50MBR04OEJQ0FFUQNGQGRQKF&client_secret=Y2XBAY2UWAODS4CXWNBQT1QBG45TSFFZK0DGQ44QTWBZLBLV&v=20180323${searchRequest}`)
-      .then((response) => {
+
+    const searchRequest = {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer amc20rbVteECACRmMl474wUSulqum2qMleHq59w3WlE83iIq66vITRT-a3SQ7O0KVsJXWgQ0PLpx8vpFJXwwOacFpXO4QDIM9-Y1uiSBSGOV7Lbu03NwzImxXl0yXnYx',
+        'Access-Control-Allow-Origin': 'https://*.yelp.com'
+      }
+    }
+
+    fetch(`https://api.yelp.com/v3/businesses/search?${search}`, searchRequest)
+      .then(response => {
         return response.json();
       })
-      .then((fourSquare) => {
-        console.log(fourSquare.response.venues);
-        // const firstTaco = {};
-        // const secondTaco = {};
-        // const top2 = [];
-        // const firstResult = response.jsonBody.businesses[0];
-        // const secondResult = response.jsonBody.businesses[1];
-        // let prettyJson = JSON.stringify(firstResult, null, 4);
-        // prettyJson = JSON.parse(prettyJson);
-        // firstTaco.name = prettyJson.name;
-        // firstTaco.rating = prettyJson.rating;
-        // firstTaco.phone = prettyJson.phone;
-        // firstTaco.address = prettyJson.location.display_address.join(' ');
-        // firstTaco.link = prettyJson.url;
-        // let prettyJson2 = JSON.stringify(secondResult, null, 4);
-        // prettyJson2 = JSON.parse(prettyJson2);
-        // secondTaco.name = prettyJson2.name;
-        // secondTaco.rating = prettyJson2.rating;
-        // secondTaco.phone = prettyJson2.phone;
-        // secondTaco.address = prettyJson2.location.display_address.join(' ');
-        // secondTaco.link = prettyJson2.url;
-        // top2.push(firstTaco);
-        // top2.push(secondTaco);
-        // console.log(top2);
-        // return top2;
+      .then ((yelp) => {
+        const firstTaco = {};
+        const secondTaco = {};
+        const top2 = [];
+        //take top 2 results
+        const firstResult = yelp.businesses[0];
+        const secondResult = yelp.businesses[1];
+
+        firstTaco.name = firstResult.name;
+        firstTaco.rating = firstResult.rating;
+        firstTaco.phone = firstResult.phone;
+        firstTaco.address = firstResult.location.display_address.join(' ');
+        firstTaco.address = firstTaco.address.replace(/\s/gi, '+');
+        firstTaco.link = firstResult.url;
+
+        secondTaco.name = secondResult.name;
+        secondTaco.rating = secondResult.rating;
+        secondTaco.phone = secondResult.phone;
+        secondTaco.address = secondResult.location.display_address.join(' ');
+        secondTaco.address = secondTaco.address.replace(/\s/gi, '+');
+        secondTaco.link = secondResult.url;
+
+        //array of the two objects
+        top2.push(firstTaco);
+        top2.push(secondTaco);
 
         /* dynamically load the two closest taco places */
-        top2.forEach((object) => {
+        top2.forEach((venue) => {
           // add a new post into the feed
           document.getElementById('optiononetwo').innerHTML += `
             <div class="option">
               <div class="info" id="info1">
-                <a href="${objext.link}" target="_blank">
-                  <h2>${object.name}</h2>
+                <a href="${venue.link}" target="_blank">
+                  <h2>${venue.name}</h2>
                 </a>
-                <p>Rating: ${object.rating}</p>
-                <a href="tel:${object.phone}" target="_blank">${object.phone}</a>
+                <p>Rating: ${venue.rating}</p>
+                <a href="tel:${venue.phone}" target="_blank">${venue.phone}</a>
               </div>
               <div id="Tago">
                 <!-- input code for google url -->
-                <a href="https://www.google.com/maps/place/${object.address}" target="_blank">Go</a>
+                <a href="https://www.google.com/maps/place/${venue.address}" target="_blank">Go</a>
               </div>
             </div>
           `;
@@ -68,13 +77,5 @@ $(document).ready( () => {
       .catch(e => {
         console.log(e);
       });
-  });
-
-  // document.getElementById('location').addEventListener('submit', (event) => {
-  //   event.preventDefault();
-  //   // resets zipcode form to empty
-  //   document.getElementById('zipcode').value = '';
-  
-  
-  // });  
+  }); 
 });
