@@ -2,16 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-'use strict';
-
-chrome.runtime.onInstalled.addListener(() => {
-  // makes sure it runs on all webpages
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {hostSuffix: '.com'},
-      })],
-      actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
+chrome.runtime.onStartup.addListener(() => {
+  chrome.storage.sync.set({venueAmount: 3}, function() {
+    console.log(chrome.storage);
   });
 });

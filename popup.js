@@ -3,6 +3,7 @@
 */
 
 $(document).ready( () => {
+  console.log(chrome.storage);
   // create the taco background
   let fallingTacos = 'url("https://media.giphy.com/media/pYCdxGyLFSwgw/giphy.gif")'
 
@@ -28,6 +29,9 @@ $(document).ready( () => {
         // array to store the top 2 results
         const topResults = [];
         // loop through the reponse from Yelp API and add top two results to array
+        
+
+
         for (let i = 0; i < 2; i++) {
           const venue = {};
           venue.name = yelp.businesses[i].name;
@@ -53,15 +57,24 @@ $(document).ready( () => {
           document.getElementById('optiononetwo').innerHTML += `
             <div class="option">
               <div class="info">
-                <a href="${venue.link}" target="_blank">
-                  <h2 id="venue-name">${venue.name}</h2>
-                </a>
-                <p id="rating">Rating: ${venue.rating}</p>
-                <a id="number" href="tel:${venue.phone}" target="_blank">${venue.phone}</a>
+                <div>
+                  <a href="${venue.link}" target="_blank">
+                    <h2 id="venue-name">${venue.name}</h2>
+                  </a>
+                </div>
+                <div class="yelp">
+                  <img src="images/regular/regular_${venue.rating}.png" id="rating">
+                  <div id="logo">
+                    <a href="https://www.yelp.com/" target="_blank" id="logolink"></a>
+                  </div>
+                </div>
+                <div>
+                  <a id="number" href="tel:${venue.phone}" target="_blank">${venue.phone}</a>
+                </div>
               </div>
               <div class="go">
                 <!-- input code for google url -->
-                <a class="btn btn-outline-warning" href="https://www.google.com/maps/place/${venue.address}" target="_blank">GO</a>
+                <a class="btn btn-success" href="https://www.google.com/maps/place/${venue.address}" target="_blank">GO</a>
                 <div id="tago"></div>
               </div>
             </div>
@@ -76,7 +89,7 @@ $(document).ready( () => {
   // javascript for loading wheel
   document.getElementById('optiononetwo').innerHTML += `
     <div class="d-flex justify-content-center" id="taco-spinner">
-      <div class="spinner-border" role="status" style="">
+      <div class="spinner-border" role="status" style="margin: 12px 12px">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
